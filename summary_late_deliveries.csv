@@ -1,0 +1,165 @@
+Order_Country_Cleaned,Total_Orders,Late_Orders,Late_Percentage
+Laos,6,6,100.0
+Equatorial Guinea,2,2,100.0
+Eritrea,2,2,100.0
+Eswatini,5,5,100.0
+Gambia,5,5,100.0
+Butan,5,5,100.0
+Armenia,5,5,100.0
+Western Sahara,2,2,100.0
+South Sudan,5,5,100.0
+Luxembourg,10,10,100.0
+Estonia,29,28,96.55
+Republic of the Congo,13,12,92.31
+Slovenia,6,5,83.33
+Guyana,19,15,78.95
+Tunisia,36,28,77.78
+Gabon,45,35,77.78
+Namibia,20,15,75.0
+Slovakia,22,16,72.73
+Turkmenistan,53,37,69.81
+Costa Rica,36,25,69.44
+Botswana,13,9,69.23
+Moldavia,78,54,69.23
+United Arab Emirates,29,20,68.97
+Bosnia and Herzegovina,45,31,68.89
+Georgia,93,64,68.82
+Sri Lanka,16,11,68.75
+Djibouti,31,21,67.74
+Ecuador,294,197,67.01
+Cyprus,12,8,66.67
+Mongolia,79,52,65.82
+Central African Republic,23,15,65.22
+Mozambique,244,156,63.93
+Niger,108,69,63.89
+Somalia,141,90,63.83
+Hungria,179,112,62.57
+Belize,13,8,61.54
+Malaysia,544,333,61.21
+Ivory Coast,257,156,60.7
+Ireland,491,298,60.69
+Ghana,264,160,60.61
+Camboya,152,92,60.53
+South Korea,583,351,60.21
+Chile,738,444,60.16
+Nepal,80,48,60.0
+Democratic Republic of the Congo,1010,604,59.8
+Angola,306,183,59.8
+Albania,37,22,59.46
+Uganda,96,57,59.38
+Croatia,86,51,59.3
+Yemen,71,42,59.15
+Bolivia,213,126,59.15
+Israel,265,156,58.87
+Bangladesh,466,274,58.8
+Trinidad and Tobago,138,81,58.7
+Sweden,929,544,58.56
+Mali,103,60,58.25
+Austria,1387,806,58.11
+Uzbekistan,121,70,57.85
+Rumania,455,263,57.8
+Pakistan,758,438,57.78
+Saudi Arabia,860,496,57.67
+Kazakhstan,274,158,57.66
+Peru,764,439,57.46
+Azerbaijan,68,39,57.35
+Afganistan,163,93,57.06
+Thailand,909,517,56.88
+Nicaragua,3046,1716,56.34
+Germany,9564,5383,56.28
+India,4783,2684,56.12
+El Salvador,3726,2091,56.12
+Uruguay,139,78,56.12
+Egypt,1189,667,56.1
+Zambia,266,149,56.02
+Belgium,664,371,55.87
+Turkey,3395,1894,55.79
+Zimbabwe,190,106,55.79
+Poland,641,357,55.69
+Spain,3868,2154,55.69
+Lithuania,133,74,55.64
+Tanzania,378,210,55.56
+Barbados,117,65,55.56
+France,13222,7341,55.52
+Indonesia,4204,2328,55.38
+Russia,1014,561,55.33
+Philippines,2103,1162,55.25
+Dominican Republic,3669,2020,55.06
+Guatemala,2778,1529,55.04
+United States,24840,13670,55.03
+Mexico,13172,7246,55.01
+Venezuela,984,541,54.98
+Iran,1460,797,54.59
+Netherlands,1932,1053,54.5
+Ukraine,967,527,54.5
+Morocco,1135,618,54.45
+Australia,8497,4613,54.29
+Myanmar,409,222,54.28
+China,5758,3123,54.24
+Brazil,7987,4331,54.23
+Haiti,534,289,54.12
+Papua New Guinea,61,33,54.1
+Syria,63,34,53.97
+Guinea-Bissau,28,15,53.57
+Italy,4989,2672,53.56
+Czech Republic,187,100,53.48
+United Kingdom,7302,3903,53.45
+Norway,333,178,53.45
+Singapore,455,243,53.41
+Switzerland,330,176,53.33
+Algeria,516,274,53.1
+Nigeria,2309,1225,53.05
+Honduras,3629,1919,52.88
+South Africa,1099,578,52.59
+New Zealand,1590,836,52.58
+Martinique,120,63,52.5
+Qatar,42,22,52.38
+Vietnam,757,394,52.05
+Jordan,108,56,51.85
+Argentina,1931,999,51.73
+Japan,758,392,51.72
+Colombia,1771,908,51.27
+Bulgaria,166,85,51.2
+Belarus,210,107,50.95
+Cuba,3534,1798,50.88
+Panama,1941,984,50.7
+Sudan,251,126,50.2
+Iraq,976,488,50.0
+Lesotho,20,10,50.0
+Jamaica,170,85,50.0
+Madagascar,149,74,49.66
+Portugal,343,169,49.27
+Canada,959,468,48.8
+Kenya,238,116,48.74
+Sierra Leona,39,19,48.72
+Finland,290,139,47.93
+Rwanda,86,41,47.67
+Libya,105,49,46.67
+Benin,85,39,45.88
+Montenegro,11,5,45.45
+Denmark,285,128,44.91
+Senegal,263,116,44.11
+Cameroon,275,121,44.0
+Tajikistan,7,3,42.86
+Guinea,45,19,42.22
+Liberia,34,14,41.18
+Greece,28,11,39.29
+Guadalupe,36,14,38.89
+Kyrgyzstan,98,38,38.78
+Paraguay,78,30,38.46
+Mauritania,21,8,38.1
+Hong Kong,73,27,36.99
+Togo,122,45,36.89
+Ethiopia,25,9,36.0
+Taiwan,29,10,34.48
+French Guiana,9,3,33.33
+Lebanon,20,6,30.0
+Macedonia,6,1,16.67
+Burkina Faso,11,1,9.09
+Chad,3,0,0.0
+Suriname,8,0,0.0
+Bahrain,4,0,0.0
+Oman,8,0,0.0
+Kuwait,2,0,0.0
+Serbia,1,0,0.0
+Burundi,1,0,0.0
