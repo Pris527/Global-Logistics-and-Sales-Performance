@@ -29,7 +29,7 @@ These KPIs anchor the analysis in both **operational performance** and **commerc
 
 In my role as a **Logistics & Customer Experience Analyst**, I supported global shipment performance: tracking on-time delivery, late orders, escalations and customer impact across multiple regions.
 
-Inspired by that work, this project simulates a global logistics environment using a structured dataset and full analytics pipeline. The objective is to demonstrate how **delivery, cost and customer value** can be integrated into a single performance view leaders can act on.
+Inspired by that work, this project analyses a structured logistics dataset designed to mirror real global shipping performance. The objective is to demonstrate how **delivery, cost and customer value** can be integrated into a single performance view leaders can act on.
 
 Common challenges from real operations informed the design:
 
@@ -48,7 +48,7 @@ Common challenges from real operations informed the design:
 
 ---
 
-## 🧱 Methodology — Data Pipeline & Modelling (BigQuery)
+## 🧱 Methodology — Data Pipeline & Operational Metrics Modelling (BigQuery)
 
 1. **Raw Data Import & Staging**  
    - Loaded shipment, order, customer and product tables into **BigQuery**  
@@ -70,10 +70,12 @@ Common challenges from real operations informed the design:
    - `summary_shipping_efficiency`  
    - `summary_country_mapping`  
 
+   📌 All summary tables are exported to the /data_summary folder for transparency and reproducibility.
+
 4. **Dashboard Build (Tableau)**  
    - KPI banner for Total Orders, Sales, Profit, Late Delivery %  
    - Dual-layer world map (volume + late % overlay)  
-   - Shipping-class performance comparison  
+   - Shipping-class efficiency comparison  
    - Time-series view of Sales vs Profit  
    - Customer segment distribution visual
 
@@ -97,6 +99,8 @@ The design balances **high-level executive visibility** with the ability to dril
 ### 2. Shipping Class Efficiency — Cost vs Service Trade-Off  
 **Visual:** Bar chart comparing shipping classes (First Class, Same Day, Standard, Second Class etc.)
 
+![Shipping Efficiency](Images/Shipping_Class_Efficiency.jpeg)
+
 **Insights:**
 
 - Faster shipping classes often come with **significantly higher cost per order**, but do not always deliver proportionally better delivery performance.  
@@ -106,7 +110,7 @@ The design balances **high-level executive visibility** with the ability to dril
 ---
 
 ### 3. Customer Segment Value — Orders & Profit  
-**Visual:** Donut / bar chart showing Consumer, Corporate, Home Office (or equivalent segments)
+**Visual:** Donut chart showing Consumer, Corporate, Home Office (or equivalent segments)
 
 **Insights:**
 
@@ -118,6 +122,9 @@ The design balances **high-level executive visibility** with the ability to dril
 
 ### 4. Time Trend — Sales vs Profit Performance  
 **Visual:** Dual-axis monthly line chart (Sales vs Profit)
+
+
+![Logistics Performance](Images/Sales_Profit_Performance.jpeg)
 
 **Insights:**
 
@@ -184,10 +191,10 @@ To further align this analytics asset with real-world logistics operations:
 
 ## 📁 Repository Structure
 
-```text
 Global-Logistics-and-Sales-Performance
 │
 ├── README.md
+│
 ├── sql
 │   ├── 01_staging_import.sql
 │   ├── 02_cleaning_and_features.sql
@@ -195,24 +202,30 @@ Global-Logistics-and-Sales-Performance
 │   ├── 04_summary_late_deliveries.sql
 │   └── 05_summary_orders_overtime.sql
 │
-├── dashboard
-│   └── Global_Logistics_Dashboard.twbx
+├── data_summary
+│   ├── summary_country_mapping.csv
+│   ├── summary_customer_segment.csv
+│   ├── summary_late_deliveries.csv
+│   ├── summary_orders_overtime.csv
+│   └── summary_shipping_efficiency.csv
 │
-└── Images
-    ├── Global_logistics_map.jpeg
-    ├── Shipping_Class_Performance.jpeg        (optional/add)
-    ├── Customer_Segment_Value.jpeg           (optional/add)
-    └── Sales_Profit_Trend.jpeg               (optional/add)
+├── Images
+│   ├── Global_logistics_map.jpeg
+│   ├── Shipping_Class_Efficiency.jpeg
+│   └── Sales_Profit_Trend.jpeg
+│
+└── LICENSE
 
 
-📊 **Interactive Dashboard**
 
-🔗 Tableau Public:
+## 📊 Interactive Dashboard
+
+**🔗 Tableau Public:**  
 https://public.tableau.com/app/profile/presca.evans/viz/GlobalLogisticsandSalesPerformance/GlobalLogisticsDashboard
 
 
-👩🏽‍💻 **Author**
+## 👩🏽‍💻 Author
 
-Dr. Presca Evans — Data Analyst & Mixed-Methods Researcher
-Bridging delivery performance, customer experience and behavioural insight.
-Relocating to Brisbane, QLD — Open to data, insights and operations-focused roles.
+**Dr. Presca Evans** — Data Analyst & Mixed-Methods Researcher  
+Bridging delivery performance, customer experience and behavioural insight.  
+📌 Relocating to Brisbane, QLD — Open to data, insights and operations-focused roles.
