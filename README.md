@@ -224,8 +224,7 @@ Global-Logistics-and-Sales-Performance
 https://public.tableau.com/app/profile/presca.evans/viz/GlobalLogisticsandSalesPerformance/GlobalLogisticsDashboard
 
 
-## 👩🏽‍💻 Author
 
-**Dr. Presca Evans** — Data Analyst & Mixed-Methods Researcher  
-Bridging delivery performance, customer experience and behavioural insight.  
-📌 Relocating to Brisbane, QLD — Open to data, insights and operations-focused roles.
+## 👩🏽‍💻 Author
+**Presca Wanki** — Data Business Analyst (Reporting & Performance)  
+Focus: KPI definition, reporting requirements, data validation, and performance insights for service improvement decisions.
