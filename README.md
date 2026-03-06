@@ -25,206 +25,266 @@ These KPIs anchor the analysis in both **operational performance** and **commerc
 
 ---
 
-## 🧭 Project Overview
+## 🧭 Project Overview (Service Performance Analyst / BA reporting lens)
 
-In my role as a **Logistics & Customer Experience Analyst**, I supported global shipment performance: tracking on-time delivery, late orders, escalations and customer impact across multiple regions.
+This portfolio piece is written from a **Service Performance & Reporting (BA-style)** lens, inspired by the kind of global shipment performance work I supported as a **Logistics & Customer Experience Analyst** at Pfizer (on-time delivery, late orders, escalations, customer impact).
 
-Inspired by that work, this project analyses a structured logistics dataset designed to mirror real global shipping performance. The objective is to demonstrate how **delivery, cost and customer value** can be integrated into a single performance view leaders can act on.
+> **Note:** This project uses a **simulated dataset** designed to mirror global shipping performance scenarios. **No confidential Pfizer data** is used.
 
-Common challenges from real operations informed the design:
+### Business context
+Global logistics leaders need a single, trusted view that links **service performance, cost-to-serve, and customer value** — so they can prioritise improvement efforts where they matter most.
 
+### Primary users
+- **Global Logistics Lead**
+- **Customer Experience Lead**
+
+### 5-minute decision this dashboard supports
+> **Which countries should we prioritise for on-time delivery (OTD) improvement — and what levers (segment, shipping class) will move the KPI fastest?**
+
+### Scope & grain
+- **Grain:** Order-level (modelled from order-level records; dashboard uses aggregated summaries for performance)
+- **Required filters:** **Country**, **Customer Segment**, **Shipping Class**
+
+### Core KPI definition (service)
+- **Late Delivery % = % of orders delivered after the promised date**
+- **OTD % = 100% − Late Delivery %** *(derived for readability)*
+
+### Why this matters (real-world challenges reflected in the design)
 - Delivery performance varies widely across countries  
 - Shipping modes differ in cost and reliability  
 - High-volume customers are not always the most profitable  
-- Late shipments cluster in specific lanes and periods  
+- Late deliveries cluster in specific lanes and periods  
 
 > **Core Question:**  
-> *Which countries, customer segments and shipping modes are driving late-delivery performance and cost variability — and how can we improve service through data?*
+> *Which countries, customer segments and shipping classes are driving late-delivery performance and cost variability — and how can leaders improve service using a single performance view?*
 
 📌 Example: Regions experiencing late shipments  
-(red = higher delays, larger bubbles = higher order volume)
+*(red = higher delays, larger bubbles = higher order volume)*
 
 ![Global_Logistics_Map](Images/Global_logistics_map.jpeg)
 
 ---
 
-## 🧱 Methodology — Data Pipeline & Operational Metrics Modelling (BigQuery)
+## 🧱 Delivery Approach (Requirements → KPI rules → validated model → dashboard)
 
-1. **Raw Data Import & Staging**  
-   - Loaded shipment, order, customer and product tables into **BigQuery**  
-   - Created staging tables to handle nulls, invalid dates, and inconsistent country names  
+This project is structured like a **reporting delivery**: define the decision need, confirm KPI rules, validate data quality, then build a dashboard that meets the reporting requirements.
 
-2. **Cleaning & Feature Engineering**  
-   Standardised and derived core supply-chain metrics, such as:  
-   - On-Time Delivery %  
-   - Late Delivery % by country, segment and shipping mode  
-   - Cost per unit shipped  
-   - Profit per order  
-   - Customer segment value indicators  
+### 1) Reporting requirements (what the business needs)
 
-3. **Summary Tables for BI Layer**  
-   Built aggregated tables to keep the Tableau dashboard fast and performant, including:  
-   - `summary_customer_segment`  
-   - `summary_late_deliveries`  
-   - `summary_orders_overtime`  
-   - `summary_shipping_efficiency`  
-   - `summary_country_mapping`  
+#### User stories + acceptance criteria (sample)
+**User story 1 — Prioritisation**
+- *As a Global Logistics Lead, I need a ranked view of countries by Late Delivery % and order volume so I can prioritise OTD improvement initiatives.*
+  - **Acceptance criteria**
+    - Ranking updates based on selected filters (Country, Segment, Shipping Class)
+    - Late Delivery % excludes orders with invalid/null promised or delivered dates (flagged transparently)
+    - Visual includes the **order count base (N)** to avoid misinterpretation
 
-   📌 All summary tables are exported to the /data_summary folder for transparency and reproducibility.
+**User story 2 — Targeted intervention**
+- *As a CX Lead, I need to cut late deliveries by Customer Segment and Shipping Class so I can target actions that reduce escalations for high-value customers.*
+  - **Acceptance criteria**
+    - Segment and Shipping Class breakdowns are consistent with KPI glossary definitions
+    - “Unknown” shipping class is retained and visible for transparency (not silently dropped)
 
-4. **Dashboard Build (Tableau)**  
-   - KPI banner for Total Orders, Sales, Profit, Late Delivery %  
-   - Dual-layer world map (volume + late % overlay)  
-   - Shipping-class efficiency comparison  
-   - Time-series view of Sales vs Profit  
-   - Customer segment distribution visual
+**User story 3 — Early warning**
+- *As a Logistics Lead, I need a trend view of Late Delivery % to distinguish temporary spikes from sustained deterioration.*
+  - **Acceptance criteria**
+    - Trend reflects the same KPI rules as the prioritisation view
+    - Users can filter to a country/segment and see whether issues are **spike-based** or **structural**
 
-The design balances **high-level executive visibility** with the ability to drill into country, segment and shipping-class patterns.
+#### What the dashboard must answer
+- Country ranking for service improvement focus (Late % + volume + value context)
+- Segment and shipping-class cut views to support targeted actions
+- Trend view to spot sustained deterioration or peak-period risk
 
 ---
 
-## 🌍 Key Visuals & Insights
+### 2) KPI definitions & business rules (how metrics are calculated)
 
-### 1. Global Order Volume & Late-Delivery Performance  
-**Visual:** Dual-layer world map (bubble size = order volume, colour = Late Delivery %)
+A KPI glossary is used to ensure consistent interpretation across stakeholders.
 
-**What it shows:**
-
-- Late delivery rates remain elevated across multiple regions — signalling a **systemic issue**, not just isolated markets.  
-- High-volume countries with **above-average Late Delivery %** represent the highest-impact improvement opportunities.  
-- From a human-centred lens, variation suggests influence from: infrastructure, customs, labour capacity, and distance to key hubs.
-
----
-
-### 2. Shipping Class Efficiency — Cost vs Service Trade-Off  
-**Visual:** Bar chart comparing shipping classes (First Class, Same Day, Standard, Second Class etc.)
-
-![Shipping Efficiency](Images/Shipping_Class_Efficiency.jpeg)
-
-**Insights:**
-
-- Faster shipping classes often come with **significantly higher cost per order**, but do not always deliver proportionally better delivery performance.  
-- Standard or mid-tier shipping options perform competitively in several regions, indicating potential for **cost optimisation without significant service degradation**.  
-- This supports revisiting which customers truly need express service and which can be shifted to more efficient modes.
+| KPI | Definition | Grain | Caveats / rules |
+|---|---|---:|---|
+| Late Delivery % | % orders delivered after promised date | Order | Excludes invalid/null promised or delivered dates (flagged) |
+| OTD % | 100% − Late Delivery % | Order | Derived KPI |
+| Total Orders | Count of orders | Order | Includes “Unknown” shipping class |
+| Sales | Total revenue | Order | Depends on dataset assumptions |
+| Profit | Sales − cost | Order | Cost/profit anomalies flagged for review |
+| Cost-to-Serve | Logistics/service cost per order | Order | Used for shipping-class efficiency comparisons |
 
 ---
 
-### 3. Customer Segment Value — Orders & Profit  
-**Visual:** Donut chart showing Consumer, Corporate, Home Office (or equivalent segments)
+### 3) Data validation & quality handling (trust in the numbers)
 
-**Insights:**
-
-- A small number of segments drive a **disproportionate share of total profit**.  
-- Where late deliveries are concentrated in those segments, the **risk to loyalty and revenue is magnified**.  
-- Segment-level analysis allows leadership to decide where **service guarantees or premium routing** are most justified.
-
----
-
-### 4. Time Trend — Sales vs Profit Performance  
-**Visual:** Dual-axis monthly line chart (Sales vs Profit)
-
-
-![Logistics Performance](Images/Sales_Profit_Performance.jpeg)
-
-**Insights:**
-
-- Sales and profit generally move together, but **not always at the same rate**.  
-- Some months show high order volume but weaker profit, suggesting:
-  - Increased delivery cost  
-  - A shift towards less profitable segments  
-  - Inefficient shipping-class mix  
-- Other months show stable sales with improved profit — indicating **better cost control, routing, or segment mix**.
-
-This helps leaders focus not just on “more orders”, but on **quality of revenue**.
+Because leadership decisions depend on reliable metrics, the model includes explicit handling for:
+- Null/invalid delivery dates (flagged/excluded from SLA calculations)
+- Inconsistent country naming (normalised using mapping tables)
+- Missing shipping class (retained as “Unknown” for transparency)
+- Cost/profit anomalies (flagged for review)
 
 ---
 
-## 📉 Data Quality & Operational Risk
+### 4) Build & implementation (BigQuery → Tableau)
 
-Because operational decisions depend on data reliability, the pipeline includes a focus on **data quality**:
+- Loaded shipment, order, customer and product tables into **BigQuery**
+- Created staging tables to handle nulls, invalid dates, and inconsistent country names
+- Built curated summary tables to keep Tableau performant while preserving order-level logic:
+  - `summary_customer_segment`
+  - `summary_late_deliveries`
+  - `summary_orders_overtime`
+  - `summary_shipping_efficiency`
+  - `summary_country_mapping`
 
-| Risk Area          | Mitigation / Handling                                      |
-|--------------------|------------------------------------------------------------|
-| Null delivery dates| Filtered or flagged for exclusion from SLA calculations    |
-| Inconsistent country names | Normalised via mapping tables                      |
-| Missing shipping mode | Imputed or classified under "Unknown" for transparency  |
-| Cost / profit anomalies | Flagged in summary tables for review                  |
-
-Rather than hiding incomplete data, the model surfaces quality issues as part of **risk awareness**.
-
----
-
-## 🧩 Recommendations for Leadership
-
-| Business Finding                                         | Recommended Action                                            | Expected Outcome                                   | Metric Focus              |
-|----------------------------------------------------------|----------------------------------------------------------------|----------------------------------------------------|---------------------------|
-| High sales months with **profit erosion**                | Review shipping-class mix & carrier cost in peak periods      | Lower delivery cost without harming demand         | Profit Margin, Cost/Unit  |
-| High-volume countries with **elevated Late Delivery %**  | Prioritise root-cause analysis & process fixes in those lanes | Better customer experience where it matters most   | Late Delivery %, OTD %    |
-| Profit concentrated in **few strategic segments**        | Offer tailored SLAs, faster recovery, dedicated support       | Protect recurring revenue from key accounts        | Repeat Orders, Churn Risk |
-| Overuse of fastest shipping classes with weak ROI        | Encourage Standard for non-urgent orders                      | Reduced cost-to-serve                              | Avg Cost/Order            |
-| Late-delivery spikes aligning with **demand peaks**      | Improve demand forecasting & capacity planning                | More stable delivery performance in peak months    | OTD %, Escalation Volume  |
-
-These actions connect **delivery performance**, **customer outcomes** and **financial results**.
+📌 Summary outputs are exported to `/data_summary` for transparency and reproducibility.
 
 ---
 
-## 🚀 Future Enhancements
+### 5) Dashboard (Tableau)
 
-To further align this analytics asset with real-world logistics operations:
+**Executive layer (fast scan)**
+- KPI banner: **Total Orders, Sales, Profit, Late Delivery %, OTD %**
 
-- **Incorporate SLA thresholds explicitly**  
-  Segment late performance into: on-track, at-risk, and critical, based on agreed service targets.
+**Prioritisation layer (where to act)**
+- Country-level prioritisation view (order volume + Late Delivery %)
 
-- **Carrier-level and lane-level benchmarking**  
-  Compare performance and cost across carriers and trade lanes to support commercial negotiations.
+**Diagnostics layer (why / which lever)**
+- Shipping-class efficiency comparison (cost vs service trade-offs)
+- Segment distribution (value + service exposure)
+- Trend views (spikes vs sustained deterioration)
 
-- **Geographic drill-down**  
-  Move from country-level to regional / city / hub-level performance views.
-
-- **Customer behaviour signals**  
-  Include reorder frequency, escalation history and sensitivity to delay.
-
-- **Automated refresh and alerting**  
-  Schedule BigQuery → Tableau refreshes; trigger alerts for sustained SLA breaches in priority markets.
+The design balances **executive visibility** with drill-down via **Country, Segment and Shipping Class**.
 
 ---
 
-## 📁 Repository Structure
+## 📌 Key insights + recommended actions (Performance Review Pack)
 
-Global-Logistics-and-Sales-Performance
-│
-├── README.md
-│
-├── sql
-│   ├── 01_staging_import.sql
-│   ├── 02_cleaning_and_features.sql
-│   ├── 03_summary_customer_segment.sql
-│   ├── 04_summary_late_deliveries.sql
-│   └── 05_summary_orders_overtime.sql
-│
-├── data_summary
-│   ├── summary_country_mapping.csv
-│   ├── summary_customer_segment.csv
-│   ├── summary_late_deliveries.csv
-│   ├── summary_orders_overtime.csv
-│   └── summary_shipping_efficiency.csv
-│
-├── Images
-│   ├── Global_logistics_map.jpeg
-│   ├── Shipping_Class_Efficiency.jpeg
-│   └── Sales_Profit_Trend.jpeg
-│
-└── LICENSE
+### Executive summary (what matters this period)
+- **Service risk is concentrated, not widespread:** Late deliveries are driven by a small set of **countries + lanes** with both **high Late Delivery % and meaningful order volume**, making them the highest-impact targets for intervention.
+- **Cost-to-serve is not always buying reliability:** Some **higher-cost shipping classes** do not consistently deliver better on-time outcomes, suggesting opportunities to **rebalance mode selection rules**.
+- **Value is exposed in specific segments:** A subset of **high-value customer segments** experience disproportionate delay rates, increasing churn/escalation risk and justifying **priority service protection**.
+- **Late deliveries show repeatable patterns:** Delays **cluster by period** (spikes or sustained deterioration), indicating issues that can be addressed through **capacity planning, cut-off adherence, and carrier performance management**.
 
+---
 
+### What we’re seeing (signal from the dashboard)
 
-## 📊 Interactive Dashboard
+#### 1) Country prioritisation: where to focus first
+- Countries fall into three practical buckets:
+  - **Priority 1 — High Late % + High Volume:** largest service impact; immediate intervention recommended.
+  - **Priority 2 — High Late % + Lower Volume:** investigate root causes; targeted fixes can be quick wins.
+  - **Priority 3 — Low Late % + High Volume:** protect performance; monitor for early warning signals.
 
-**🔗 Tableau Public:**  
-https://public.tableau.com/app/profile/presca.evans/viz/GlobalLogisticsandSalesPerformance/GlobalLogisticsDashboard
+#### 2) Segment exposure: who is most affected
+- Late Delivery % is not uniform across segments:
+  - Some segments show **higher delays despite moderate volume**, implying process or promise-date issues.
+  - High-value segments with rising late rates represent **commercial risk** and should be **shielded** through prioritisation rules.
 
+#### 3) Shipping class trade-offs: cost vs service reality
+- Shipping classes show clear efficiency differences:
+  - Some modes deliver **acceptable service at lower cost** (good default candidates).
+  - Some modes show **high cost without proportional service benefit** (candidates for rule change or carrier review).
+  - “Unknown”/missing shipping class may hide operational issues and should be reduced through upstream data fixes.
 
+#### 4) Trend patterns: temporary spike or structural issue?
+- Late Delivery % trends show:
+  - **Spike periods** consistent with seasonal demand/capacity strain or cut-off breaches.
+  - **Sustained deterioration** consistent with structural carrier performance or lane/process constraints.
+- Identifying whether the issue is spiky vs sustained determines whether the fix is **capacity planning** vs **structural redesign**.
 
-## 👩🏽‍💻 Author
-**Presca Wanki** — Data Business Analyst (Reporting & Performance)  
-Focus: KPI definition, reporting requirements, data validation, and performance insights for service improvement decisions.
+---
+
+### Recommended actions (what to do next)
+
+#### A) Focus list: fix the top drivers first (2-week sprint)
+**Action**
+- Create a “Top Priority Countries” backlog using:
+  - **Late Delivery % (primary) + Order Volume (weighting) + Customer Value (tie-breaker)**
+- Select the top **[X]** countries/lane combinations as sprint items.
+
+**Owner**
+- Global Logistics Lead + CX Lead (with analyst support)
+
+**Success metrics**
+- Late Delivery % reduction in Priority 1 countries
+- Fewer repeat late lanes / exception recurrence
+- Reduced escalations for impacted customers
+
+---
+
+#### B) Shipping class decision rules: rebalance cost vs service (2–4 weeks)
+**Action**
+- For each Priority 1 country, compare shipping classes using:
+  - Late Delivery % vs Cost-to-Serve vs Profit impact
+- Update decision rules:
+  - Promote “efficient” modes (good service at lower cost)
+  - Restrict “expensive underperformers” to exception cases only
+- Add guardrails: when Late Delivery % exceeds **[threshold]**, trigger a mode review.
+
+**Owner**
+- Ops Excellence / Continuous Improvement + Procurement/Carrier Management
+
+**Success metrics**
+- Improved service at equal or lower cost (cost/service efficiency)
+- Reduced profit leakage from high-cost modes without service benefit
+
+---
+
+#### C) Protect high-value segments: service prioritisation logic (4 weeks)
+**Action**
+- Identify segments with:
+  - High profit contribution AND above-average Late Delivery %
+- Implement prioritisation rules:
+  - Priority handling for **[Segment A/B]** during peak periods
+  - Escalation triggers and proactive customer comms for at-risk orders
+
+**Owner**
+- Customer Experience Lead + Planning/Allocation
+
+**Success metrics**
+- Late Delivery % improvement for high-value segments
+- Reduced customer-impact incidents (complaints/escalations)
+
+---
+
+#### D) Root-cause drill-down: turn “where” into “why” (2–6 weeks, parallel)
+**Action**
+- For each Priority 1 country/lane, run a structured root-cause review:
+  - Promise-date accuracy (lead times / cut-off adherence)
+  - Carrier OT performance and exception reasons
+  - Warehouse dispatch timing / handoff delays
+  - Customs or lane constraints (if applicable)
+- Produce a one-page “Lane Fix Sheet” per country with:
+  - Root-cause hypothesis
+  - Fix owner
+  - Expected impact
+  - Verification metric
+
+**Owner**
+- Cross-functional: Warehouse + Carrier Mgmt + CX + Finance (as needed)
+
+**Success metrics**
+- Sustained improvement over **[N]** weeks post-fix
+- Reduced repeat exceptions in the same lanes
+
+---
+
+### Controls & governance (so leadership trusts the numbers)
+- **Data quality exclusions are explicit:** invalid/null promised or delivered dates are flagged and excluded from SLA calculations.
+- **Country naming is standardised:** mapping rules prevent double counting and inconsistent rollups.
+- **Unknown shipping class is retained:** reported transparently to avoid hiding issues; tracked for reduction upstream.
+
+---
+
+### KPIs to monitor weekly (leading + lagging)
+
+**Service**
+- Late Delivery % (overall + Priority 1 countries)
+- Late Delivery % by segment and shipping class
+- On-time trend stability (spikes vs sustained)
+
+**Operational**
+- Orders volume in Priority 1 lanes
+- Escalation volume / repeat late lanes
+
+**Commercial**
+- Profit / cost-to-serve movement by shipping class
+- High-value segment service protection outcomes
