@@ -288,3 +288,9 @@ The design balances **executive visibility** with drill-down via **Country, Segm
 **Commercial**
 - Profit / cost-to-serve movement by shipping class
 - High-value segment service protection outcomes
+
+--- 
+
+## 👩🏽‍💻 Author
+**Presca Wanki** — Service Performance & Insights Analyst (BA reporting lens)  
+Focus: KPI definition, reporting requirements, data validation, and performance insights to support service improvement decisions.
