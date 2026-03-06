@@ -224,7 +224,8 @@ This project is structured like a **reporting delivery**: define the decision ne
 
 ### 3) Time trend — performance stability
 **Look for:** Spike-based vs sustained deterioration (different fixes)  
-![Sales vs Profit Trend](Images/Sales_Profit_Trend.jpeg)
+![Sales vs Profit Trend](Images/Sales_Profit_Performance.jpeg)
+
 
 ---
 
