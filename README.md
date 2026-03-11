@@ -179,10 +179,12 @@ This project is structured like a **reporting delivery**: define the decision ne
 | Cost/profit anomalies | Flagged in summary outputs for review (not silently removed) |
 
 ### Quick validation checks (examples)
-- Late Delivery % is always between **0% and 100%**  
-- Dashboard totals reconcile to summary tables for the same filter set  
-- KPI rules are consistent across prioritisation, breakdowns and trends  
-- “Unknown” Shipping Class is visible and included in totals  
+- Late Delivery % is always between **0% and 100%**
+- **OTD % equals 100% − Late Delivery %** for the same filter set
+- **Late Delivery % denominator excludes invalid/null promised or delivered dates** (and excluded count is visible)
+- Dashboard totals reconcile to summary tables for the same filter set
+- KPI rules are consistent across prioritisation, breakdowns and trends
+- “Unknown” Shipping Class is visible and included in totals
 
 ---
 
