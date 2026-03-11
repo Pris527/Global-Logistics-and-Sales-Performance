@@ -144,16 +144,21 @@ This project is structured like a **reporting delivery**: define the decision ne
 
 ---
 
-## 2) KPI glossary (definitions, grain, rules)
+## 2) KPI glossary (definitions & business rules)
 
-| KPI | Definition | Grain | Caveats / rules |
-|---|---|---:|---|
-| Late Delivery % | % of orders delivered **after promised date** | Order | Excludes invalid/null promised or delivered dates *(flagged & counted separately)* |
-| OTD % | 100% − Late Delivery % | Order | Derived KPI |
-| Total Orders | Count of orders | Order | Includes “Unknown” Shipping Class |
-| Sales | Total revenue | Order | Based on dataset assumptions |
-| Profit | Sales − cost | Order | Cost/profit anomalies flagged for review |
-| Cost-to-Serve (proxy) | Service/logistics cost per order (proxy) | Order | Directional comparisons (not accounting-grade costing) |
+| KPI | What it means | How it’s calculated | Grain | Exclusions / missing-data handling | Filters / breakdowns |
+|---|---|---|---:|---|---|
+| Late Delivery % | % of orders delivered after the promised date | Late orders ÷ valid orders × 100 | Order | Exclude orders with null/invalid promised or delivered dates; keep excluded count visible for transparency | Country, Customer Segment, Shipping Class, Time |
+| OTD % | On-time delivery rate | 100% − Late Delivery % | Order | Same rules as Late Delivery % | Country, Customer Segment, Shipping Class, Time |
+| Total Orders (Base N) | Total order volume (context for KPI interpretation) | Count of orders | Order | Keep “Unknown” shipping class visible; orders with invalid dates are excluded from Late % denominator but still count toward volume | Country, Segment, Shipping Class, Time |
+| Sales | Revenue context to interpret service impact | Sum of sales amount | Order | Flag anomalies (e.g., negative/zero values) rather than silently removing | Country, Segment, Shipping Class, Time |
+| Profit (directional) | Directional profitability indicator for prioritisation | Sales − Cost (dataset assumption) | Order | Flag cost/profit anomalies for review; do not silently remove | Country, Segment, Shipping Class, Time |
+| Cost-to-Serve (proxy) | Directional service cost per order (supports shipping-class decisions) | Cost per order / cost proxy (dataset fields) | Order | Flag extreme outliers; keep visible for transparency | Country, Segment, Shipping Class, Time |
+| Shipping Class Mix | Distribution of orders across shipping classes | % of total orders by shipping class | Order | Keep “Unknown” class visible (data quality transparency) | Country, Segment, Time |
+
+**Notes**
+- “Valid orders” for Late Delivery % = orders with both promised date and delivered date present and valid.  
+- Profit and Cost-to-Serve are **directional** and depend on dataset assumptions; use for comparisons and prioritisation, not accounting-grade reporting.
 
 ---
 
