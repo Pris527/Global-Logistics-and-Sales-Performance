@@ -80,6 +80,13 @@ This project is structured like a **reporting delivery**: define the decision ne
 
 > **Scope note:** This is a **BA reporting deliverable** focused on KPI definition, reporting requirements, validation and decision support. The **SQL/BigQuery layer** is the implementation used to produce trusted metrics.
 
+--- 
+
+## Non-functional requirements (NFRs)
+- **Definition consistency:** KPI rules match the glossary across the map, trends, and breakdown views.
+- **Transparency:** Invalid/null date exclusions are handled consistently and visible; “Unknown” categories remain visible (not silently dropped).
+- **Usability:** Base *N* and clear labels/definitions are shown to prevent misinterpretation.
+
 ---
 
 ## 1) Reporting requirements (user stories + acceptance criteria)
