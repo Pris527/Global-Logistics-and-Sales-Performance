@@ -93,7 +93,7 @@ This project is structured like a **reporting delivery**: define the decision ne
 
 This process map summarises the order-to-delivery workflow, key handoffs, and the exception path for data issues (for example, master data corrections) that can affect service KPI accuracy and operational decisions.
 
-![Global Logistics Process Map](Images/Global_Logistics_Process_Map.png)
+![Global Logistics Process Map](Images/Global_Logistics_Process_Map.jpeg) 
 
 ---
 
