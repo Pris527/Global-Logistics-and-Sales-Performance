@@ -87,6 +87,14 @@ This project is structured like a **reporting delivery**: define the decision ne
 - **Transparency:** Invalid/null date exclusions are handled consistently and visible; “Unknown” categories remain visible (not silently dropped).
 - **Usability:** Base *N* and clear labels/definitions are shown to prevent misinterpretation.
 
+--- 
+
+## Process map (swimlane / BPMN-inspired)
+
+This process map summarises the order-to-delivery workflow, key handoffs, and the exception path for data issues (for example, master data corrections) that can affect service KPI accuracy and operational decisions.
+
+![Global Logistics Process Map](Images/Global_Logistics_Process_Map.png)
+
 ---
 
 ## 1) Reporting requirements (user stories + acceptance criteria)
